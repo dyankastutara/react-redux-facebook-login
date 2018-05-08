@@ -26,7 +26,7 @@ class FacebookLogin extends React.Component{
     window.FB.login(
       function(response){
         this.statusChangeCallback(response);
-      }.bind(this)
+      }.bind(this),{scope: 'public_profile,email'}
     )
   }
 
@@ -40,29 +40,31 @@ class FacebookLogin extends React.Component{
     console.log('statusChangeCallback');
     console.log(response);
     if (response.status === 'connected') {
-      this.getDataFacebook();
+      this.getDataFacebook(response);
     } else {
 
     }
   }
 
-  getDataFacebook = () =>{
+  getDataFacebook = (data) =>{
     console.log('Welcome!  get your information.... ');
-    window.FB.api('/me', function(response) {
-      window.FB.api(`/${response.id}`,'GET',{},function(res){
-        console.log(res);
-        console.log('Successful login for: ' + response.name);
-      })
+    window.FB.api('/me?fields=id,name,email', function(response) {
+      console.log(response);
+      console.log('Successful login for: ' + response.name);
     });
   }
   render(){
-    return <img
-      src="https://scontent-sin6-1.xx.fbcdn.net/v/t1.0-9/31562081_10157324683366729_5005221974700457984_n.png?_nc_cat=0&oh=b3d657959c8f5001c01b5cb9e9f49db4&oe=5B8A0D79"
-      title="facebook"
-      onClick={()=>this.facebookLogin()}
-      alt="facebook"
-      style={{width:50, height:50}}
-      />
+    return (
+      <div>
+        <img
+          src="https://scontent-sin6-1.xx.fbcdn.net/v/t1.0-9/31562081_10157324683366729_5005221974700457984_n.png?_nc_cat=0&oh=b3d657959c8f5001c01b5cb9e9f49db4&oe=5B8A0D79"
+          title="facebook"
+          onClick={()=>this.facebookLogin()}
+          alt="facebook"
+          style={{width:50, height:50}}
+          />
+      </div>
+    )
   }
 }
 
