@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import FacebookLogin from './social/FacebookLogin/index';
+import FacebookLogin from './components/loginpage/index';
 
 import './App.css';
 

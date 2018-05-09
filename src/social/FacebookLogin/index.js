@@ -2,9 +2,10 @@ import React from 'react';
 import '../style.css';
 class FacebookLogin extends React.Component{
   componentDidMount(){
+    const {appId} = this.props;
     window.fbAsyncInit = function() {
       window.FB.init({
-        appId      : '641795306161398',
+        appId      : appId,
         cookie     : true,  // enable cookies to allow the server to access
         xfbml      : true,  // parse social plugins on this page
         version    : 'v2.8' // use graph api version 2.8
@@ -31,14 +32,11 @@ class FacebookLogin extends React.Component{
   }
 
   cekLoginState(){
-    console.log("FB check login");
     window.FB.getLoginStatus(function(response) {
       this.statusChangeCallback(response);
     });
   }
   statusChangeCallback(response){
-    console.log('statusChangeCallback');
-    console.log(response);
     if (response.status === 'connected') {
       this.getDataFacebook(response);
     } else {
@@ -47,15 +45,17 @@ class FacebookLogin extends React.Component{
   }
 
   getDataFacebook = (data) =>{
-    console.log('Welcome!  get your information.... ');
-    window.FB.api('/me?fields=id,name,email', function(response) {
-      console.log(response);
-      console.log('Successful login for: ' + response.name);
+    const self = this;
+    window.FB.api('/me?fields=id,name,email,picture', function(response) {
+      self.props.onSuccess(response)
     });
   }
   render(){
+    const {
+      cssStyle, buttonText
+    } = this.props;
     return (
-      <div onClick={()=>this.facebookLogin()} className="loginBtn loginBtn--facebook">Login Facebook</div>
+      <div onClick={()=>this.facebookLogin()} className="loginBtn loginBtn--facebook" style={cssStyle ? cssStyle : null}>{buttonText ? buttonText : 'Lanjutkan dengan Facebook'}</div>
     )
   }
 }
