@@ -1,5 +1,5 @@
 import React from 'react';
-
+import '../style.css';
 class FacebookLogin extends React.Component{
   componentDidMount(){
     window.fbAsyncInit = function() {
@@ -55,15 +55,7 @@ class FacebookLogin extends React.Component{
   }
   render(){
     return (
-      <div>
-        <img
-          src="https://scontent-sin6-1.xx.fbcdn.net/v/t1.0-9/31562081_10157324683366729_5005221974700457984_n.png?_nc_cat=0&oh=b3d657959c8f5001c01b5cb9e9f49db4&oe=5B8A0D79"
-          title="facebook"
-          onClick={()=>this.facebookLogin()}
-          alt="facebook"
-          style={{width:50, height:50}}
-          />
-      </div>
+      <div onClick={()=>this.facebookLogin()} className="loginBtn loginBtn--facebook">Login Facebook</div>
     )
   }
 }
